@@ -54,9 +54,8 @@ export default function AppNavigator() {
                         <Stack.Screen name="ReportAnalysis" component={ReportAnalysisScreen} />
                         <Stack.Screen name="Settings" component={SettingsScreen} />
                     </>
-                    </>
                 )}
-        </Stack.Navigator>
+            </Stack.Navigator>
         </NavigationContainer >
     );
 }
