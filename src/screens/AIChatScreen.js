@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import { COLORS, SIZES } from '../constants/theme';
 import ScreenWrapper from '../components/ScreenWrapper';
 import { Ionicons } from '@expo/vector-icons';
 
-const MOCK_MESSAGES = [
+const DEFAULT_MESSAGES = [
     { id: '1', text: 'Hello! I am your AI Health Assistant. How can I help you today?', sender: 'ai' },
 ];
 
-export default function AIChatScreen({ navigation }) {
-    const [messages, setMessages] = useState(MOCK_MESSAGES);
+export default function AIChatScreen({ route, navigation }) {
+    const [messages, setMessages] = useState(DEFAULT_MESSAGES);
     const [inputText, setInputText] = useState('');
+
+    useEffect(() => {
+        if (route.params?.context) {
+            setMessages([
+                {
+                    id: '1',
+                    text: `Hello! I see you collected your report for "${route.params.context}". Do you have specific questions about these results?`,
+                    sender: 'ai'
+                }
+            ]);
+        }
+    }, [route.params]);
 
     const sendMessage = () => {
         if (!inputText.trim()) return;

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Animated } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../constants/theme';
 import ScreenWrapper from '../components/ScreenWrapper';
 import CustomButton from '../components/CustomButton';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { saveHealthRecord } from '../utils/storage';
 
 export default function HealthAnalysisScreen({ route, navigation }) {
     // Get data passed from input screen
@@ -15,6 +16,16 @@ export default function HealthAnalysisScreen({ route, navigation }) {
             recommendation: 'Rest and fluids'
         }
     };
+
+    useEffect(() => {
+        if (route.params?.analysis) {
+            saveHealthRecord({
+                type: 'Symptom Analysis',
+                summary: analysis.conditions[0]?.name || 'Unknown Condition',
+                details: analysis
+            });
+        }
+    }, []);
 
     const getUrgencyColor = (level) => {
         switch (level.toLowerCase()) {

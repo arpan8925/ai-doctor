@@ -13,6 +13,7 @@ import SymptomInputScreen from '../screens/SymptomInputScreen';
 import AIChatScreen from '../screens/AIChatScreen';
 import HealthAnalysisScreen from '../screens/HealthAnalysisScreen';
 import ReportAnalysisScreen from '../screens/ReportAnalysisScreen';
+import HealthHistoryScreen from '../screens/HealthHistoryScreen';
 import {
     SettingsScreen
 } from '../screens/Placeholders';
@@ -52,6 +53,7 @@ export default function AppNavigator() {
                         <Stack.Screen name="AIChat" component={AIChatScreen} />
                         <Stack.Screen name="HealthAnalysis" component={HealthAnalysisScreen} />
                         <Stack.Screen name="ReportAnalysis" component={ReportAnalysisScreen} />
+                        <Stack.Screen name="HealthHistory" component={HealthHistoryScreen} />
                         <Stack.Screen name="Settings" component={SettingsScreen} />
                     </>
                 )}

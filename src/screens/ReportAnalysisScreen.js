@@ -119,7 +119,7 @@ export default function ReportAnalysisScreen({ navigation }) {
                         <CustomButton
                             title="Ask AI Doctor about this"
                             variant="outline"
-                            onPress={() => navigation.navigate('AIChat')}
+                            onPress={() => navigation.navigate('AIChat', { context: result.summary })}
                             style={{ marginTop: 15 }}
                         />
                     </View>
