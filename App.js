@@ -1,20 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { ClerkProvider, ClerkLoaded } from '@clerk/clerk-expo';
+import tokenCache from './src/utils/tokenCache';
+import AppNavigator from './src/navigation/AppNavigator';
+
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+if (!publishableKey) {
+  throw new Error(
+    'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env',
+  )
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+      <ClerkLoaded>
+        <SafeAreaProvider>
+          <AppNavigator />
+        </SafeAreaProvider>
+      </ClerkLoaded>
+    </ClerkProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
