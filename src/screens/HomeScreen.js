@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { COLORS, SIZES, SHADOWS } from '../constants/theme';
 import ScreenWrapper from '../components/ScreenWrapper';
-import { Ionicons } from '@expo/vector-icons'; // Assuming Expo
+import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useUser } from '@clerk/clerk-expo';
 
 const FEATURES = [
     {
@@ -53,7 +54,7 @@ const FeatureCard = ({ item, onPress }) => {
 };
 
 export default function HomeScreen({ navigation }) {
-
+    const { user } = useUser();
     const handleEmergency = () => {
         navigation.navigate('Emergency'); // To implement
     };
@@ -61,9 +62,15 @@ export default function HomeScreen({ navigation }) {
     return (
         <ScreenWrapper>
             <View style={styles.header}>
-                <View>
-                    <Text style={styles.greeting}>Hello, User 👋</Text>
-                    <Text style={styles.subGreeting}>How are you feeling today?</Text>
+                <View style={styles.headerLeft}>
+                    <Image
+                        source={{ uri: user?.imageUrl }}
+                        style={styles.avatar}
+                    />
+                    <View style={{ marginLeft: 10 }}>
+                        <Text style={styles.greeting}>Hello, {user?.firstName} 👋</Text>
+                        <Text style={styles.subGreeting}>How are you feeling today?</Text>
+                    </View>
                 </View>
                 <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
                     <Ionicons name="settings-outline" size={24} color={COLORS.text} />
@@ -112,6 +119,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: SIZES.padding,
         paddingTop: SIZES.padding,
         marginBottom: 20,
+    },
+    headerLeft: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    avatar: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        borderWidth: 2,
+        borderColor: COLORS.primary,
     },
     greeting: {
         fontSize: 24,
