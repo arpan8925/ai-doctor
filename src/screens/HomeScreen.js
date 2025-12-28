@@ -55,9 +55,31 @@ const FeatureCard = ({ item, onPress }) => {
 
 export default function HomeScreen({ navigation }) {
     const { user } = useUser();
-    const handleEmergency = () => {
-        navigation.navigate('Emergency'); // To implement
-    };
+
+    // Features based on 9-Screen PRD
+    const SECONDARY_FEATURES = [
+        {
+            id: 2,
+            title: 'Report Analysis',
+            icon: 'scan',
+            screen: 'ReportAnalysis',
+            colors: ['#4FACFE', '#00F2FE'],
+        },
+        {
+            id: 3,
+            title: 'AI Helper',
+            icon: 'happy',
+            screen: 'AIChat',
+            colors: ['#a18cd1', '#fbc2eb'],
+        },
+        {
+            id: 4,
+            title: 'Health History',
+            icon: 'time',
+            screen: 'HealthHistory',
+            colors: ['#84fab0', '#8fd3f4'],
+        },
+    ];
 
     return (
         <ScreenWrapper>
@@ -79,23 +101,36 @@ export default function HomeScreen({ navigation }) {
 
             <ScrollView contentContainerStyle={styles.content}>
 
-                {/* Emergency Button */}
-                <TouchableOpacity style={styles.emergencyBtn} onPress={handleEmergency}>
+                {/* Main Feature: Primary Symptom Analysis */}
+                <Text style={styles.sectionTitle}>Start Health Check</Text>
+                <TouchableOpacity
+                    style={styles.mainFeatureBtn}
+                    onPress={() => navigation.navigate('SymptomInput')}
+                    activeOpacity={0.9}
+                >
                     <LinearGradient
-                        colors={[COLORS.danger, '#FF6B6B']}
-                        style={styles.emergencyGradient}
+                        colors={['#FF9A9E', '#FECFEF']}
+                        style={styles.mainFeatureGradient}
                         start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
+                        end={{ x: 1, y: 1 }}
                     >
-                        <Ionicons name="alert-circle" size={24} color={COLORS.white} style={{ marginRight: 10 }} />
-                        <Text style={styles.emergencyText}>Emergency Help</Text>
+                        <View style={styles.mainIconCircle}>
+                            <Ionicons name="pulse" size={40} color={COLORS.primary} />
+                        </View>
+                        <View style={{ flex: 1 }}>
+                            <Text style={styles.mainFeatureTitle}>Primary Symptom Analysis</Text>
+                            <Text style={styles.mainFeatureSubtitle}>
+                                Check symptoms & get instant advice
+                            </Text>
+                        </View>
+                        <Ionicons name="arrow-forward-circle" size={32} color={COLORS.white} />
                     </LinearGradient>
                 </TouchableOpacity>
 
-                <Text style={styles.sectionTitle}>Services</Text>
+                <Text style={[styles.sectionTitle, { marginTop: 30 }]}>More Options</Text>
 
                 <View style={styles.grid}>
-                    {FEATURES.map((item) => (
+                    {SECONDARY_FEATURES.map((item) => (
                         <FeatureCard
                             key={item.id}
                             item={item}
@@ -103,8 +138,6 @@ export default function HomeScreen({ navigation }) {
                         />
                     ))}
                 </View>
-
-                {/* Recent Activity or Insight could go here */}
 
             </ScrollView>
         </ScreenWrapper>
@@ -144,22 +177,35 @@ const styles = StyleSheet.create({
         paddingHorizontal: SIZES.padding,
         paddingBottom: 50,
     },
-    emergencyBtn: {
-        marginBottom: 30,
+    mainFeatureBtn: {
         borderRadius: SIZES.radius,
         ...SHADOWS.medium,
+        marginBottom: 10,
     },
-    emergencyGradient: {
+    mainFeatureGradient: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: 15,
+        padding: 20,
         borderRadius: SIZES.radius,
     },
-    emergencyText: {
-        color: COLORS.white,
-        fontSize: SIZES.large,
+    mainIconCircle: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        backgroundColor: COLORS.white,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 15,
+    },
+    mainFeatureTitle: {
+        fontSize: 18,
         fontWeight: 'bold',
+        color: COLORS.white,
+    },
+    mainFeatureSubtitle: {
+        fontSize: 14,
+        color: '#FFF',
+        opacity: 0.9,
     },
     sectionTitle: {
         fontSize: SIZES.large,

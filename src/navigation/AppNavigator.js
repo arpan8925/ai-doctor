@@ -14,6 +14,7 @@ import AIChatScreen from '../screens/AIChatScreen';
 import HealthAnalysisScreen from '../screens/HealthAnalysisScreen';
 import MedicineReminderScreen from '../screens/MedicineReminderScreen';
 import AddMedicineScreen from '../screens/AddMedicineScreen';
+import ReportAnalysisScreen from '../screens/ReportAnalysisScreen';
 import {
     HealthRecordsScreen,
     EmergencyScreen,
@@ -54,6 +55,7 @@ export default function AppNavigator() {
                         <Stack.Screen name="SymptomInput" component={SymptomInputScreen} />
                         <Stack.Screen name="AIChat" component={AIChatScreen} />
                         <Stack.Screen name="HealthAnalysis" component={HealthAnalysisScreen} />
+                        <Stack.Screen name="ReportAnalysis" component={ReportAnalysisScreen} />
                         <Stack.Screen name="HealthRecords" component={HealthRecordsScreen} />
                         <Stack.Screen name="MedicineReminder" component={MedicineReminderScreen} />
                         <Stack.Screen name="AddMedicine" component={AddMedicineScreen} options={{ presentation: 'modal' }} />
