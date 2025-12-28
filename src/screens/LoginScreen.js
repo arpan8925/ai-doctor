@@ -1,5 +1,6 @@
 import React from 'react';
 import * as WebBrowser from 'expo-web-browser';
+import Constants from 'expo-constants';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Platform } from 'react-native';
 import { useOAuth } from '@clerk/clerk-expo';
 import * as Linking from 'expo-linking';
@@ -25,12 +26,20 @@ WebBrowser.maybeCompleteAuthSession();
 export default function LoginScreen({ navigation }) {
     useWarmUpBrowser();
 
+    const isExpoGo =
+        Constants?.appOwnership === 'expo' ||
+        Constants?.executionEnvironment === Constants?.ExecutionEnvironment?.StoreClient;
+
     const { startOAuthFlow } = useOAuth({ strategy: 'oauth_google' });
 
     const onGoogleSignIn = React.useCallback(async () => {
         try {
+            const redirectUrl = isExpoGo
+                ? Linking.createURL('/dashboard')
+                : Linking.createURL('/oauth-native-callback', { scheme: 'aidoctor' });
+
             const { createdSessionId, signIn, signUp, setActive } = await startOAuthFlow({
-                redirectUrl: Linking.createURL('/dashboard', { scheme: 'myapp' }), // Adjust scheme if needed
+                redirectUrl,
             });
 
             if (createdSessionId) {

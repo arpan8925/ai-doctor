@@ -8,11 +8,14 @@ export default function CustomButton({
     onPress,
     variant = 'primary', // primary, secondary, outline, ghost
     isLoading = false,
+    disabled = false,
     style,
     textStyle
 }) {
     const isGradient = variant === 'primary' || variant === 'secondary';
     const gradientColors = variant === 'secondary' ? COLORS.gradientPurple : COLORS.gradientPrimary;
+
+    const isDisabled = Boolean(disabled || isLoading);
 
     const ButtonContent = () => (
         <>
@@ -35,9 +38,9 @@ export default function CustomButton({
         return (
             <TouchableOpacity
                 onPress={onPress}
-                disabled={isLoading}
+                disabled={isDisabled}
                 activeOpacity={0.8}
-                style={[styles.container, style]}
+                style={[styles.container, isDisabled && styles.disabled, style]}
             >
                 <LinearGradient
                     colors={gradientColors}
@@ -54,10 +57,11 @@ export default function CustomButton({
     return (
         <TouchableOpacity
             onPress={onPress}
-            disabled={isLoading}
+            disabled={isDisabled}
             style={[
                 styles.container,
                 variant === 'outline' && styles.outline,
+                isDisabled && styles.disabled,
                 style
             ]}
         >
@@ -90,5 +94,8 @@ const styles = StyleSheet.create({
         color: COLORS.white,
         fontSize: SIZES.medium,
         fontWeight: '600',
+    },
+    disabled: {
+        opacity: 0.6,
     },
 });

@@ -3,6 +3,7 @@
     "name": "ai-doctor",
     "slug": "ai-doctor",
     "version": "1.0.0",
+    "scheme": "aidoctor",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -21,7 +22,23 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.aidoctor"
+      "package": "com.anonymous.aidoctor",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": false,
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ],
+          "data": [
+            {
+              "scheme": "aidoctor",
+              "pathPrefix": "/oauth-native-callback"
+            }
+          ]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
