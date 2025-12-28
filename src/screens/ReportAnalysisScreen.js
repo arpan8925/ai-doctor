@@ -11,10 +11,16 @@ export default function ReportAnalysisScreen({ navigation }) {
     const [analyzing, setAnalyzing] = useState(false);
     const [result, setResult] = useState(null);
 
-    const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    const takePhoto = async () => {
+        // Request Camera Permissions
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+        if (status !== 'granted') {
+            alert('Sorry, we need camera permissions to make this work!');
+            return;
+        }
+
+        let result = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
@@ -22,7 +28,7 @@ export default function ReportAnalysisScreen({ navigation }) {
 
         if (!result.canceled) {
             setImage(result.assets[0].uri);
-            setResult(null); // Reset previous result
+            setResult(null);
         }
     };
 
@@ -62,8 +68,8 @@ export default function ReportAnalysisScreen({ navigation }) {
                         <Image source={{ uri: image }} style={styles.previewImage} />
                     ) : (
                         <View style={styles.placeholderBox}>
-                            <Ionicons name="cloud-upload-outline" size={50} color={COLORS.textSecondary} />
-                            <Text style={styles.placeholderText}>Tap below to upload a medical report</Text>
+                            <Ionicons name="camera-outline" size={50} color={COLORS.textSecondary} />
+                            <Text style={styles.placeholderText}>Tap below to take a photo of report</Text>
                         </View>
                     )}
                 </View>
@@ -71,8 +77,8 @@ export default function ReportAnalysisScreen({ navigation }) {
                 {/* Actions */}
                 <View style={styles.actionRow}>
                     <CustomButton
-                        title={image ? "Change Photo" : "Upload Photo"}
-                        onPress={pickImage}
+                        title={image ? "Retake Photo" : "Take Photo"}
+                        onPress={takePhoto}
                         variant="outline"
                         style={{ flex: 1, marginRight: 10 }}
                     />
