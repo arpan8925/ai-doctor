@@ -12,12 +12,8 @@ import HomeScreen from '../screens/HomeScreen';
 import SymptomInputScreen from '../screens/SymptomInputScreen';
 import AIChatScreen from '../screens/AIChatScreen';
 import HealthAnalysisScreen from '../screens/HealthAnalysisScreen';
-import MedicineReminderScreen from '../screens/MedicineReminderScreen';
-import AddMedicineScreen from '../screens/AddMedicineScreen';
 import ReportAnalysisScreen from '../screens/ReportAnalysisScreen';
 import {
-    HealthRecordsScreen,
-    EmergencyScreen,
     SettingsScreen
 } from '../screens/Placeholders';
 
@@ -56,14 +52,11 @@ export default function AppNavigator() {
                         <Stack.Screen name="AIChat" component={AIChatScreen} />
                         <Stack.Screen name="HealthAnalysis" component={HealthAnalysisScreen} />
                         <Stack.Screen name="ReportAnalysis" component={ReportAnalysisScreen} />
-                        <Stack.Screen name="HealthRecords" component={HealthRecordsScreen} />
-                        <Stack.Screen name="MedicineReminder" component={MedicineReminderScreen} />
-                        <Stack.Screen name="AddMedicine" component={AddMedicineScreen} options={{ presentation: 'modal' }} />
-                        <Stack.Screen name="Emergency" component={EmergencyScreen} />
                         <Stack.Screen name="Settings" component={SettingsScreen} />
                     </>
+                    </>
                 )}
-            </Stack.Navigator>
-        </NavigationContainer>
+        </Stack.Navigator>
+        </NavigationContainer >
     );
 }

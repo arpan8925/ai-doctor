@@ -63,7 +63,7 @@ export default function ReportAnalysisScreen({ navigation }) {
             <ScrollView contentContainerStyle={styles.content}>
 
                 {/* Image Placeholder / Selected Image */}
-                <View style={styles.imageContainer}>
+                <TouchableOpacity style={styles.imageContainer} onPress={takePhoto}>
                     {image ? (
                         <Image source={{ uri: image }} style={styles.previewImage} />
                     ) : (
@@ -72,7 +72,7 @@ export default function ReportAnalysisScreen({ navigation }) {
                             <Text style={styles.placeholderText}>Tap below to take a photo of report</Text>
                         </View>
                     )}
-                </View>
+                </TouchableOpacity>
 
                 {/* Actions */}
                 <View style={styles.actionRow}>

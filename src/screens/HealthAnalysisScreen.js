@@ -32,15 +32,15 @@ export default function HealthAnalysisScreen({ route, navigation }) {
 
             <ScrollView contentContainerStyle={styles.content}>
 
-                {/* Urgency Card */}
+                {/* Risk Level Card */}
                 <Animated.View style={[styles.card, { borderLeftColor: getUrgencyColor(analysis.urgency), borderLeftWidth: 5 }]}>
-                    <Text style={styles.cardLabel}>Urgency Level</Text>
+                    <Text style={styles.cardLabel}>Risk Level</Text>
                     <Text style={[styles.urgencyText, { color: getUrgencyColor(analysis.urgency) }]}>
-                        {analysis.urgency}
+                        {analysis.urgency} Risk
                     </Text>
                 </Animated.View>
 
-                {/* Potential Conditions */}
+                {/* Potential Causes */}
                 <Text style={styles.sectionTitle}>Potential Causes</Text>
                 {analysis.conditions.map((item, index) => (
                     <View key={index} style={styles.conditionItem}>
@@ -50,8 +50,8 @@ export default function HealthAnalysisScreen({ route, navigation }) {
                     </View>
                 ))}
 
-                {/* Doctor's Recommendation */}
-                <Text style={styles.sectionTitle}>Recommendation</Text>
+                {/* Smart Health Advice */}
+                <Text style={styles.sectionTitle}>Advice & Recommendation</Text>
                 <LinearGradient
                     colors={['#e0c3fc', '#8ec5fc']}
                     start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
@@ -60,6 +60,14 @@ export default function HealthAnalysisScreen({ route, navigation }) {
                     <Ionicons name="medkit-outline" size={32} color={COLORS.primary} style={{ marginBottom: 10 }} />
                     <Text style={styles.recText}>{analysis.recommendation}</Text>
                 </LinearGradient>
+
+                {/* Disclaimer */}
+                <View style={styles.disclaimerBox}>
+                    <Ionicons name="information-circle-outline" size={20} color={COLORS.textSecondary} />
+                    <Text style={styles.disclaimerText}>
+                        Disclaimer: This Analysis is AI-generated and for informational purposes only. It is not a medical diagnosis. Please consult a doctor for serious concerns.
+                    </Text>
+                </View>
 
                 <CustomButton
                     title="Consult a Specialist"
@@ -151,5 +159,22 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         lineHeight: 24,
         fontWeight: '500',
+    },
+    disclaimerBox: {
+        flexDirection: 'row',
+        marginTop: 20,
+        backgroundColor: COLORS.background,
+        padding: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: COLORS.border,
+    },
+    disclaimerText: {
+        flex: 1,
+        marginLeft: 10,
+        fontSize: 12,
+        color: COLORS.textSecondary,
+        fontStyle: 'italic',
     },
 });
