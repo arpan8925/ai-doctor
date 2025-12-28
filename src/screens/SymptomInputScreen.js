@@ -8,11 +8,44 @@ import CustomButton from '../components/CustomButton';
 export default function SymptomInputScreen({ navigation }) {
     const [symptoms, setSymptoms] = useState('');
     const [duration, setDuration] = useState('');
-    const [severity, setSeverity] = useState('Medium'); // Could be a slider
+    const [severity, setSeverity] = useState('5');
+    const [loading, setLoading] = useState(false);
 
     const handleAnalyze = () => {
-        // Navigate to Results (Placeholder)
-        navigation.navigate('HealthAnalysis');
+        if (!symptoms.trim()) {
+            alert("Please describe your symptoms first");
+            return;
+        }
+
+        setLoading(true);
+
+        // Mock API Call simulation
+        setTimeout(() => {
+            setLoading(false);
+
+            // Mock Data Response based on simple keywords (just for show)
+            let mockResult = {
+                conditions: [
+                    { name: 'Viral Infection', probability: 'High' },
+                    { name: 'Dehydration', probability: 'Medium' }
+                ],
+                urgency: 'Medium',
+                recommendation: 'Stay hydrated, take rest, and monitor temperature. Consult a doctor if fever persists > 2 days.'
+            };
+
+            if (symptoms.toLowerCase().includes('chest') || symptoms.toLowerCase().includes('heart')) {
+                mockResult = {
+                    conditions: [
+                        { name: 'Angina', probability: 'Medium' },
+                        { name: 'Muscle Strain', probability: 'High' }
+                    ],
+                    urgency: 'High',
+                    recommendation: 'Seek immediate medical attention to rule out cardiac issues.'
+                };
+            }
+
+            navigation.navigate('HealthAnalysis', { analysis: mockResult });
+        }, 2000);
     };
 
     return (
@@ -38,16 +71,21 @@ export default function SymptomInputScreen({ navigation }) {
                     onChangeText={setDuration}
                 />
 
-                {/* Severity Slider Placeholder */}
-                <Text style={styles.label}>Severity (1-10)</Text>
+                <Text style={styles.label}>Severity (1-10): {severity}</Text>
                 <InputField
                     placeholder="5"
                     keyboardType="numeric"
                     value={severity}
                     onChangeText={setSeverity}
+                    maxLength={2}
                 />
 
-                <CustomButton title="Analyze Health" onPress={handleAnalyze} style={{ marginTop: 20 }} />
+                <CustomButton
+                    title={loading ? "Analyzing..." : "Analyze Health"}
+                    onPress={handleAnalyze}
+                    isLoading={loading}
+                    style={{ marginTop: 20 }}
+                />
             </ScrollView>
         </ScreenWrapper>
     );
